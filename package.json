@@ -3,14 +3,38 @@
     "package": [
         {
             "name": "core",
-            "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/README.md",
-            "install_path": "README.md",
+            "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/core.py",
+            "install_path": "core.py",
             "sha256": "xxxxxx"
         },
         {
             "name": "core_ext",
-            "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/README.md",
-            "install_path": "README1.md",
+            "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/core_ext.py",
+            "install_path": "core_ext.py",
+            "sha256": "yyyyyy"
+        },
+        {
+            "name": "devices",
+            "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/devices.py",
+            "install_path": "devices.py",
+            "sha256": "yyyyyy"
+        },
+        {
+            "name": "index",
+            "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/index.html",
+            "install_path": "templates/index.html",
+            "sha256": "yyyyyy"
+        },
+        {
+            "name": "run",
+            "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/run.py",
+            "install_path": "run.py",
+            "sha256": "yyyyyy"
+        },
+        {
+            "name": "web",
+            "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/web.py",
+            "install_path": "web.py",
             "sha256": "yyyyyy"
         }
     ]
