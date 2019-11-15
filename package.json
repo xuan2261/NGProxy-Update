@@ -1,6 +1,6 @@
 {
     "version": "1.4",
-    "packge": [
+    "package": [
         {
             "name": "core",
             "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/core.py",
