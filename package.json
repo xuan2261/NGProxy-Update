@@ -11,7 +11,7 @@
             "name": "core_ext",
             "download_url": "https://raw.githubusercontent.com/binluv1905/NGProxy-Update/master/core_ext.so",
             "install_path": "core_ext.so",
-            "sha256": "FE735863B34D67964B50CAF5CC7AEF60D7897FA15E2972A0F554DEB1042449BE"
+            "sha256": "6A4A905749D6F044E7CBB808E803C7844862DA8D5DDA6FC37A46A488C0D3BA28"
         },
         {
             "name": "core_web",
