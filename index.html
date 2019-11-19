@@ -68,11 +68,12 @@
       <div class="card card-body bg-white">
         <table id="tbl_dashboard" class="table table-hover mt-4">
           <thead>
+            <th></th>
             <th>Device Serial</th>
             <th>IMEI</th>
             <th>Local</th>
             <th>Remote</th>
-            <th>Modified</th>
+            <th>Last Modified</th>
             <th>Port</th>
             <th>Status</th>
           </thead>
@@ -162,6 +163,7 @@
           color = "orangered"
         }
         html = '<tr class="text-left" style="background-color: ' + color + ';">' +
+          '<td>' + i + '</td>' +
           '<td>' + result[i].serial + '</td>' +
           '<td>' + result[i].imei + '</td>' +
           '<td>' + result[i].ppp_local + '</td>' +
