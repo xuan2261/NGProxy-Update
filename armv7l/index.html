@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>NextGen Proxy</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/de6e91b12a.js"></script>
+
+  <style media="screen">
+    html,
+    body {
+      height: 100%;
+    }
+
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active {
+      color: #ffffff;
+      background-color: #343a40;
+      border-color: #343a40 #343a40 #343a40;
+    }
+
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link:hover {
+      color: #ffffff;
+      background-color: #343a40;
+      border-color: #343a40 #343a40 #343a40;
+    }
+
+    .nav-tabs {
+      border-bottom: none;
+    }
+
+    a {
+      color: #a4a4a5;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand" style=" font-weight: bold; " href="#"> <span class="fas fa-biohazard"></span> NGProxy</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab"
+            aria-controls="dashboard" aria-selected="true" style=" font-weight: bold; ">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="system-tab" data-toggle="tab" href="#system" role="tab" aria-controls="system"
+            aria-selected="false" style=" font-weight: bold; ">System and License</a>
+        </li>
+
+      </ul>
+  </nav>
+  <div class="tab-content jumbotron-fluid p-5" id="myTabContent">
+    <div class="tab-pane fade show active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+      <div class="card card-body bg-white">
+        <table id="tbl_dashboard" class="table table-hover mt-4">
+          <thead>
+            <th></th>
+            <th>Device Serial</th>
+            <th>IMEI</th>
+            <th>Local</th>
+            <th>Remote</th>
+            <th>Last Modified</th>
+            <th>Port</th>
+            <th>Status</th>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="system" role="tabpanel" aria-labelledby="system-tab">
+      <div class="card card-body bg-white">
+        <div class="mt-3">
+          <p style=" font-weight: bold; ">System</p>
+          <ul>
+            <li>Notification: <span id="system-notification"></span> </li>
+            <li>Version: <span id="system-version"></span> </li>
+            <li>IP Address: <span id="system-ipaddr"></span> </li>
+          </ul>
+        </div>
+        <button id="notify-dismiss" class="btn btn-outline-success mt-3" style=" max-width: max-content; " type="button"
+          name="apply">Dismiss</button>
+        <hr>
+        <label for="system-user" style=" font-weight: bold; ">Configurations</label>
+        <div class="input-group mt-3" style=" max-width: max-content; ">
+          <div class="input-group-prepend">
+            <span class="input-group-text">USERNAME</span>
+          </div>
+          <input id="system-user" type="text" class="form-control" placeholder="username" aria-label="Input username"
+            aria-describedby="basic-addon2">
+
+        </div>
+
+        <div class="input-group mt-3" style=" max-width: max-content; ">
+          <div class="input-group-prepend">
+            <span class="input-group-text">PASSWORD</span>
+          </div>
+          <input id="system-password" type="password" class="form-control" placeholder="password"
+            aria-label="Input password" aria-describedby="basic-addon2">
+
+        </div>
+
+        <div class="input-group mt-3" style=" max-width: max-content; ">
+          <div class="input-group-prepend">
+            <span class="input-group-text">AUTO RESET (by minutes)</span>
+          </div>
+          <input id="reset-time" type="text" class="form-control" placeholder="by minutes" aria-label="Input reset time"
+            aria-describedby="basic-addon2">
+
+        </div>
+        <button id="apply" class="btn btn-outline-success mt-3" style=" max-width: max-content; " type="button"
+          name="apply">Apply</button>
+        <hr>
+        <div class="mt-3">
+          <p style=" font-weight: bold; ">License</p>
+          <ul>
+            <li>ID: <span id="license-id"></span></li>
+            <li>License: <span id="license-license"></span></li>
+            <li>Period: <span id="license-period"></span></li>
+            <li>Created: <span id="license-created"></span></li>
+            <li>Expires: <span id="license-expires"></span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+</body>
+
+<script>
+  $.ajax({
+    method: "GET",
+    url: "/proxy_info",
+    dataType: "json",
+    success: function (result) {
+      $('#tbl_dashboard tbody').html('');
+      for (i = 0; i < result.length; i++) {
+        if (result[i].status.includes("up")) {
+          color = "lightgreen"
+        } else if (result[i].status.includes("wait")) {
+          color = "lightblue"
+        }
+        else {
+          color = "orangered"
+        }
+        html = '<tr class="text-left" style="background-color: ' + color + ';">' +
+          '<td>' + i + '</td>' +
+          '<td>' + result[i].serial + '</td>' +
+          '<td>' + result[i].imei + '</td>' +
+          '<td>' + result[i].ppp_local + '</td>' +
+          '<td>' + result[i].ppp_remote + '</td>' +
+          '<td>' + result[i].time_stamp + '</td>' +
+          '<td>' + result[i].port + '</td>' +
+          '<td>' + result[i].status + '</td>' +
+          '</tr>'
+        $('#tbl_dashboard tbody').append(html);
+      }
+    },
+    error: function (xhr, status) {
+      console.log("request_failed: " + status);
+
+    }
+  });
+
+  $.ajax({
+    method: "GET",
+    url: "/system_license",
+    dataType: "json",
+    success: function (result) {
+      $('#system-version').text(result.version);
+      $('#license-id').text(result.license_id);
+      $('#license-license').text(result.license_license);
+      $('#license-period').text(result.license_period);
+      $('#license-created').text(result.license_created);
+      $('#license-expires').text(result.license_expires);
+      $('#system-user').val(result.user);
+      $('#system-password').val(result.passwd);
+      $('#reset-time').val(result.reset_time);
+      $('#system-notification').text(result.notification);
+      $('#system-ipaddr').text(result.ipaddr);
+    },
+    error: function (xhr, status) {
+      console.log("request_failed: " + status);
+
+    }
+  });
+
+  $("#apply").click(function () {
+    $.ajax({
+      url: "/system_config",
+      method: "POST",
+      data: JSON.stringify({
+        reset_time: $('#reset-time').val(),
+        user: $('#system-user').val(),
+        passwd: $('#system-password').val()
+      }),
+      contentType: "application/json",
+      dataType: 'json',
+      success: function (data) {
+        console.log(data)
+        alert(JSON.stringify(data));
+        location.reload();
+      },
+      error: function (xhr, status) {
+        console.log(status)
+        alert(JSON.stringify(status));
+      }
+    });
+  });
+
+  $("#notify-dismiss").click(function () {
+    $.ajax({
+      url: "/clear_notify",
+      method: "POST",
+      data: JSON.stringify({
+        clear_notify: 1,
+      }),
+      contentType: "application/json",
+      dataType: 'json',
+      success: function (data) {
+        console.log(data)
+        alert(JSON.stringify(data));
+        location.reload();
+      },
+      error: function (xhr, status) {
+        console.log(status)
+        alert(JSON.stringify(status));
+      }
+    });
+  });
+</script>
+
+</html>
